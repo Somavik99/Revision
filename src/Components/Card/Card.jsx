@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Card = () => {
   const [ApiData, setApiData] = useState([]);
 
-  const fetchApi = async () => {
+  const fetchApi = () => {
     try {
-      const resp = await axios.get(
-        "https://647e2164af984710854af832.mockapi.io/newapi"
-      );
-      console.log(resp.data);
-      setApiData(resp.data);
+      setTimeout(async () => {
+        const resp = await axios.get(
+          "https://647e2164af984710854af832.mockapi.io/newapi"
+        );
+        console.log(resp.data);
+        setApiData(resp.data);
+      }, 1000);
     } catch (err) {
       console.log(err);
     } finally {
@@ -19,7 +22,9 @@ const Card = () => {
   };
   useEffect(() => {
     fetchApi();
-
+    return () => {
+      clearTimeout();
+    };
   }, []);
 
   const DeleteData = (id) => {
@@ -30,11 +35,19 @@ const Card = () => {
       });
   };
 
+  const EditData = (name, email, address) => {
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("address", address);
+  };
+
   return (
     <div>
-        <div>
-            <button className="btn btn-outline-secondary float-right">Add More</button>
-        </div>
+      <div className="float-right">
+        <Link to="/">
+          <button className="btn btn-outline-secondary ">Add More</button>
+        </Link>
+      </div>
       <div>
         {ApiData.map((data, i) => {
           return (
@@ -42,7 +55,20 @@ const Card = () => {
               <span>{data.Users.userName}</span>
               <div>{data.Users.userEmail}</div>
               <div>{data.Users.userAddress}</div>
-              <button className="btn btn-outline-primary">Edit</button>
+              <Link to="/update">
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() =>
+                    EditData(
+                      data.Users.userName,
+                      data.Users.userEmail,
+                      data.Users.userAddress
+                    )
+                  }
+                >
+                  Edit
+                </button>
+              </Link>
               <button
                 className="btn btn-outline-danger"
                 onClick={() => DeleteData(data.id)}

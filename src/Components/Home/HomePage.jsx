@@ -51,7 +51,7 @@ const HomePage = () => {
             <label htmlFor="Email">Email</label>
             <input
               required
-              type="text"
+              type="email"
               name="userEmail"
               className="form-control w-25 border-5"
               value={Users.userEmail}
