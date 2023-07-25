@@ -25,7 +25,7 @@ const HomePage = () => {
     e.preventDefault();
     await axios
       .post("https://647e2164af984710854af832.mockapi.io/newapi", {
-        Users: Users,
+        Users:Users,
       })
       .then(() => {
         navigate("/Cards");

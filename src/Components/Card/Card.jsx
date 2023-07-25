@@ -35,8 +35,9 @@ const Card = () => {
       });
   };
 
-  const EditData = (name, email, address) => {
-    localStorage.setItem("name", JSON.stringify( name));
+  const EditData = (id, name, email, address) => {
+    localStorage.setItem("id", JSON.stringify(id));
+    localStorage.setItem("name", JSON.stringify(name));
     localStorage.setItem("email", JSON.stringify(email));
     localStorage.setItem("address", JSON.stringify(address));
   };
@@ -52,18 +53,14 @@ const Card = () => {
         {ApiData.map((data, i) => {
           return (
             <div key={i} className="w-25 h-75  border">
-              <span>{data.Users.userName}</span>
-              <div>{data.Users.userEmail}</div>
-              <div>{data.Users.userAddress}</div>
+              <span>{data.name}</span>
+              <div>{data.email}</div>
+              <div>{data.address}</div>
               <Link to="/update">
                 <button
                   className="btn btn-outline-primary"
                   onClick={() =>
-                    EditData(
-                      data.Users.userName,
-                      data.Users.userEmail,
-                      data.Users.userAddress
-                    )
+                    EditData(data.id, data.name, data.email, data.address)
                   }
                 >
                   Edit

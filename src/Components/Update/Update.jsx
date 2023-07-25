@@ -1,17 +1,33 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Update = () => {
+  const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
+  const navigateTo = useNavigate();
+
   useEffect(() => {
+    setId(JSON.parse(localStorage.getItem("id")));
     setName(JSON.parse(localStorage.getItem("name")));
     setEmail(JSON.parse(localStorage.getItem("email")));
     setAddress(JSON.parse(localStorage.getItem("address")));
   }, []);
 
-  const HandleUpdate = () => {};
+  const HandleUpdate = async () => {
+    await axios
+      .put(`https://647e2164af984710854af832.mockapi.io/newapi/${id}`, {
+        name: name,
+        email: email,
+        address: address,
+      })
+      .then(() => {
+        navigateTo("/Cards");
+      });
+  };
 
   return (
     <>
@@ -21,7 +37,6 @@ const Update = () => {
             <label htmlFor="Name">Name</label>
             <input
               type="text"
-              name="name"
               value={name}
               className="form-control w-25 border-4"
               onChange={(e) => setName(e.target.value)}
@@ -31,7 +46,6 @@ const Update = () => {
             <label htmlFor="Email">Email</label>
             <input
               type="email"
-              name="email"
               value={email}
               className="form-control w-25 border-4"
               onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +55,6 @@ const Update = () => {
             <label htmlFor="Address">Address</label>
             <input
               type="text"
-              name="address"
               value={address}
               className="form-control w-25 border-4"
               onChange={(e) => setAddress(e.target.value)}
@@ -49,6 +62,7 @@ const Update = () => {
           </div>
           <div>
             <button
+              type="submit"
               className="btn btn-outline-success border-2 my-3"
               onClick={HandleUpdate}
             >
