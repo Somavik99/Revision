@@ -36,9 +36,9 @@ const Card = () => {
   };
 
   const EditData = (name, email, address) => {
-    localStorage.setItem("name", name);
-    localStorage.setItem("email", email);
-    localStorage.setItem("address", address);
+    localStorage.setItem("name", JSON.stringify( name));
+    localStorage.setItem("email", JSON.stringify(email));
+    localStorage.setItem("address", JSON.stringify(address));
   };
 
   return (
