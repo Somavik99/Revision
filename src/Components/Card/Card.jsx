@@ -53,14 +53,19 @@ const Card = () => {
         {ApiData.map((data, i) => {
           return (
             <div key={i} className="w-25 h-75  border">
-              <span>{data.name}</span>
-              <div>{data.email}</div>
-              <div>{data.address}</div>
+              <span>{data.Users.userName}</span>
+              <div>{data.Users.userEmail}</div>
+              <div>{data.Users.userAddress}</div>
               <Link to="/update">
                 <button
                   className="btn btn-outline-primary"
                   onClick={() =>
-                    EditData(data.id, data.name, data.email, data.address)
+                    EditData(
+                      data.id,
+                      data.Users.userName,
+                      data.Users.userEmail,
+                      data.Users.userAddress
+                    )
                   }
                 >
                   Edit
